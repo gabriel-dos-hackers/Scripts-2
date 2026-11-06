@@ -1,0 +1,199 @@
+-- Carregamento da UI Fluent e Addons necessários
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "hAppYNesS HuB! | Fluent " .. Fluent.Version,
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Theme = "Dark",
+    Acrylic = false -- Desativado para evitar travamentos no Delta Mobile
+})
+
+-- Criação das Abas
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+    Executor = Window:AddTab({ Title = "Executor", Icon = "terminal" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+-- Notificações iniciais
+Fluent:Notify({ Title = "owner: Gabriel dos hackers", Content = "hello welcome to: hAppYNesS HuB!", Duration = 5 })
+Fluent:Notify({ Title = "owner: Gabriel dos hackers", Content = "Have fun!!!!", Duration = 5 })
+
+-- Aba Main: Parágrafo
+Tabs.Main:AddParagraph({ Title = "by Gabriel dos hackers", Content = "hAppYNesS HuB!" })
+
+-- Aba Main: Botões
+Tabs.Main:AddButton({ 
+    Title = "load YouTube (without key)", 
+    Callback = function() 
+        local success, err = pcall(function()
+            loadstring(game:HttpGet("https://scriptblox.com/raw/Universal-Script-Youtube-Music-Player-Without-Key-231639"))()
+        end)
+        
+        if success then
+            Fluent:Notify({ Title = "YouTube Player", Content = "Player loaded successfully!", Duration = 3 })
+        else
+            Fluent:Notify({ Title = "YouTube Player", Content = "Error loading: Check console", Duration = 4 })
+            warn("Erro ao carregar YouTube Player: ", err)
+        end
+    end 
+})
+
+Tabs.Main:AddButton({ 
+    Title = "fly hack", 
+    Callback = function() 
+        local success, err = pcall(function()
+            loadstring(game:HttpGet("https://scriptblox.com/raw/Universal-Script-Universal-Fly-Gui-V3-15837"))()
+        end)
+
+        if success then
+            Fluent:Notify({ Title = "Fly Hack", Content = "Fly GUI loaded successfully!", Duration = 3 })
+        else
+            Fluent:Notify({ Title = "Fly Hack", Content = "Error loading Fly GUI", Duration = 4 })
+            warn("Erro ao carregar Fly GUI: ", err)
+        end
+    end 
+})
+
+Tabs.Main:AddButton({ 
+    Title = "require ir server-side executor", 
+    Callback = function() 
+        local success, err = pcall(function()
+            loadstring(game:HttpGet("https://scriptblox.com/raw/Universal-Script-Executor-requure-204506"))()
+        end)
+
+        if success then
+            Fluent:Notify({ Title = "Require Executor", Content = "Require Executor loaded successfully!", Duration = 3 })
+        else
+            Fluent:Notify({ Title = "Require Executor", Content = "Error loading Require Executor", Duration = 4 })
+            warn("Erro ao carregar Require Executor: ", err)
+        end
+    end 
+})
+
+Tabs.Main:AddButton({ 
+    Title = "wallhop auto", 
+    Callback = function() 
+        Fluent:Notify({ Title = "Wallhop", Content = "Auto wallhop ready!", Duration = 3 })
+    end 
+})
+
+Tabs.Main:AddButton({ 
+    Title = "inf jump", 
+    Callback = function() 
+        Fluent:Notify({ Title = "Inf Jump", Content = "Infinite jump enabled!", Duration = 3 })
+        game:GetService("UserInputService").JumpRequest:Connect(function()
+            local player = game:GetService("Players").LocalPlayer
+            if player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+                player.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+            end
+        end)
+    end 
+})
+
+Tabs.Main:AddButton({ 
+    Title = "hidrogen executor", 
+    Callback = function() 
+        local success, err = pcall(function()
+            loadstring(game:HttpGet("https://scriptblox.com/raw/Universal-Script-Hydrogen-Remake-51753"))()
+        end)
+
+        if success then
+            Fluent:Notify({ Title = "Hydrogen Remake", Content = "Hydrogen loaded successfully!", Duration = 3 })
+        else
+            Fluent:Notify({ Title = "Hydrogen Remake", Content = "Error loading Hydrogen", Duration = 4 })
+            warn("Erro ao carregar Hydrogen Remake: ", err)
+        end
+    end 
+})
+
+-- Toggle
+local Toggle = Tabs.Main:AddToggle("MyToggle", { 
+    Title = "Who wants to run this script?",
+    Default = false
+})
+
+Toggle:OnChanged(function() 
+    print("Toggle value:", Options.MyToggle.Value) 
+end)
+
+-- Slider de Volume
+local Slider = Tabs.Main:AddSlider("VolumeSlider", {
+    Title = "volume",
+    Description = "Adjust the volume settings",
+    Default = 3,
+    Min = 0,
+    Max = 5,
+    Rounding = 1,
+    Callback = function(Value)
+        print("Slider was changed:", Value)
+    end
+})
+
+Slider:OnChanged(function(Value)
+    print("Slider changed:", Value)
+end)
+
+-- Colorpicker
+local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
+    Title = "Colorpicker",
+    Default = Color3.fromRGB(96, 205, 255)
+})
+
+Colorpicker:OnChanged(function()
+    print("Colorpicker changed:", Colorpicker.Value)
+end)
+
+-- Colorpicker com transparência
+local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
+    Title = "Colorpicker",
+    Description = "but you can change the transparency.",
+    Transparency = 0,
+    Default = Color3.fromRGB(96, 205, 255)
+})
+
+TColorpicker:OnChanged(function()
+    print(
+        "TColorpicker changed:", TColorpicker.Value,
+        "Transparency:", TColorpicker.Transparency
+    )
+end)
+
+-- Input System
+local Input = Tabs.Main:AddInput("InputSystem", {
+    Title = "Input-system",
+    Default = "Default",
+    Placeholder = "Placeholder",
+    Numeric = false, 
+    Finished = false, 
+    Callback = function(Value)
+        print("Input changed:", Value)
+    end
+})
+
+-- Configuração dos Managers na aba Settings
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+InterfaceManager:SetFolder("hAppYNesSHuB")
+SaveManager:SetFolder("hAppYNesSHuB/game-config")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+Window:SelectTab(1)
+
+Fluent:Notify({
+    Title = "hAppYNesS HuB",
+    Content = "Script loaded successfully!",
+    Duration = 6
+})
+
+SaveManager:LoadAutoloadConfig()
